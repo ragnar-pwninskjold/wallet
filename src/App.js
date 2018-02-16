@@ -24,7 +24,11 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img
+            src="http://simpleicon.com/wp-content/uploads/coin-money-1.svg"
+            className="App-logo"
+            alt="logo"
+          />
           <h1 className="App-title">So you wanna learn to save?</h1>
         </header>
         <p className="App-intro">
