@@ -58,8 +58,8 @@ app.post("/get_access_token", function(request, response, next) {
         error: msg
       });
     }
-    ACCESS_TOKEN = tokenResponse.access_token;
-    ITEM_ID = tokenResponse.item_id;
+    ACCESS_TOKEN = tokenResponse.access_token; // access token for this specific bank
+    ITEM_ID = tokenResponse.item_id; // item corresponds to the bank
     console.log("Access Token: " + ACCESS_TOKEN);
     console.log("Item ID: " + ITEM_ID);
     response.json({
@@ -71,6 +71,7 @@ app.post("/get_access_token", function(request, response, next) {
 app.get("/accounts", function(request, response, next) {
   // Retrieve high-level account information and account and routing numbers
   // for each account associated with the Item.
+  console.log("requesting accounts");
   client.getAuth(ACCESS_TOKEN, function(error, authResponse) {
     if (error != null) {
       let msg = "Unable to pull accounts from the Plaid API.";
@@ -96,7 +97,7 @@ app.post("/item/public_token/create", function(request, response, next) {
     if (err) {
       console.error(err);
     }
-    console.log(result);
+    //console.log(result);
     const publicToken = result.public_token;
   });
 });
@@ -110,6 +111,7 @@ app.post("/item", function(request, response, next) {
         error: error
       });
     }
+    console.log("itemResponse: ", itemResponse);
 
     // Also pull information about the institution
     client.getInstitutionById(itemResponse.item.institution_id, function(

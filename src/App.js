@@ -6,21 +6,44 @@ import "./App.css";
 const logo = require("./logo.svg");
 
 class App extends React.Component {
-  // componentDidMount() {
-  //   axios.post('http://localhost:8000/item/public_token/create')
-  //   .then((res) => console.log(res))
-  //   .catch(err => console.error(err));
-  //   // axios.post('http://localhost:8000/get_access_token')
-  //   // .then((res) => console.log(res))
-  //   // .catch((err) => console.error(err));
-  // }
+  constructor(props) {
+    super(props);
+    this.pullAccounts = this.pullAccounts.bind(this);
+    this.pullTransactions = this.pullTransactions.bind(this);
+    this.handleOnSuccess = this.handleOnSuccess.bind(this);
+    this.state = {
+      accounts: null,
+      transactions: null
+    };
+  }
+  componentDidMount() {
+    //console.log(this);
+  }
   handleOnExit() {
     console.log("exited");
   }
   handleOnSuccess(token, metadata) {
-    axios.post("http://localhost:8000/get_access_token", {
-      public_token: token
-    });
+    axios
+      .post("http://localhost:8000/get_access_token", {
+        public_token: token
+      })
+      .then(() => {
+        this.pullAccounts();
+        this.pullTransactions();
+      })
+      .catch(err => console.error(err));
+  }
+  pullAccounts() {
+    axios
+      .get("http://localhost:8000/accounts")
+      .then(res => this.setState({ accounts: res.data.accounts }))
+      .catch(err => console.error(err));
+  }
+  pullTransactions() {
+    axios
+      .post("http://localhost:8000/transactions")
+      .then(res => this.setState({ transactions: res.data.transactions }))
+      .catch(err => console.error(err));
   }
   render() {
     return (
