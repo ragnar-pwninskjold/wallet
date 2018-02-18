@@ -11,3 +11,14 @@ This application couples your spending habits with your savings habits! Every ti
 Eventually, users will be able to set up recurring deposits, and set up "buckets" that each respective addition to the overall pool is distributed amongst. You can then set "withdrawl" dates that lock the funds until a set date. If you take money out early, you lose a portion of it - so remember to save responsibly. 
 
 PRs welcome.
+
+# How to Start Server
+
+Navigate to root directory, then:
+
+APP_PORT=8000 \
+PLAID_CLIENT_ID=#### \
+PLAID_SECRET=#### \
+PLAID_PUBLIC_KEY=#### \
+PLAID_ENV=sandbox \
+node server.js
