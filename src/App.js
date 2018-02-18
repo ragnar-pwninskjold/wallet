@@ -1,5 +1,5 @@
 import * as React from "react";
-//import axios from 'axios';
+import axios from "axios";
 import PlaidLink from "react-plaid-link";
 import "./App.css";
 
@@ -18,7 +18,9 @@ class App extends React.Component {
     console.log("exited");
   }
   handleOnSuccess(token, metadata) {
-    console.log(token);
+    axios.post("http://localhost:8000/get_access_token", {
+      public_token: token
+    });
   }
   render() {
     return (
@@ -35,12 +37,13 @@ class App extends React.Component {
           To get started, select <code>Connect to your bank account</code> below
         </p>
         <PlaidLink
-          clientName="Wallit"
+          clientName="WallET"
           env="sandbox"
           product={["auth, transactions"]}
           publicKey="30e4e1987778346fbae93ed8b21171"
           onExit={this.handleOnExit}
           onSuccess={this.handleOnSuccess}
+          className="plaid-link"
         >
           Connect your bank account
         </PlaidLink>
