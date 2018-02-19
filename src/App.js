@@ -8,14 +8,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.pullAccounts = this.pullAccounts.bind(this);
-    this.pullTransactions = this.pullTransactions.bind(this);
+
     this.handleOnSuccess = this.handleOnSuccess.bind(this);
     this.updateSelectedAccountCallback = this.updateSelectedAccountCallback.bind(
       this
     );
     this.state = {
       accounts: null,
-      transactions: null,
       linked: false,
       selectedAccount: null
     };
@@ -33,7 +32,6 @@ class App extends React.Component {
       })
       .then(() => {
         this.pullAccounts();
-        this.pullTransactions();
       })
       .catch(err => console.error(err));
   }
@@ -43,12 +41,7 @@ class App extends React.Component {
       .then(res => this.setState({ accounts: res.data.accounts, linked: true }))
       .catch(err => console.error(err));
   }
-  pullTransactions() {
-    axios
-      .post("http://localhost:8000/transactions")
-      .then(res => this.setState({ transactions: res.data.transactions }))
-      .catch(err => console.error(err));
-  }
+
   updateSelectedAccountCallback(account_id) {
     this.setState({ selectedAccount: account_id });
   }
