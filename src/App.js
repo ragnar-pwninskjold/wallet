@@ -10,10 +10,14 @@ class App extends React.Component {
     this.pullAccounts = this.pullAccounts.bind(this);
     this.pullTransactions = this.pullTransactions.bind(this);
     this.handleOnSuccess = this.handleOnSuccess.bind(this);
+    this.updateSelectedAccountCallback = this.updateSelectedAccountCallback.bind(
+      this
+    );
     this.state = {
       accounts: null,
       transactions: null,
-      linked: false
+      linked: false,
+      selectedAccount: null
     };
   }
   componentDidMount() {
@@ -45,6 +49,9 @@ class App extends React.Component {
       .then(res => this.setState({ transactions: res.data.transactions }))
       .catch(err => console.error(err));
   }
+  updateSelectedAccountCallback(account_id) {
+    this.setState({ selectedAccount: account_id });
+  }
   render() {
     return (
       <div className="App">
@@ -60,7 +67,10 @@ class App extends React.Component {
           To get started, select <code>Connect to your bank account</code> below
         </p>
         {this.state.linked ? (
-          <AccountsGrid accounts={this.state.accounts} />
+          <AccountsGrid
+            accounts={this.state.accounts}
+            selectedAccount={this.updateSelectedAccountCallback}
+          />
         ) : (
           <PlaidLink
             clientName="WallET"

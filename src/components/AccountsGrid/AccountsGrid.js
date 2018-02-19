@@ -1,13 +1,20 @@
 import * as React from "react";
 import { Grid, Row, Col, Jumbotron, Button } from "react-bootstrap";
 
+import SingleAccount from "../SingleAccountView/SingleAccount";
+
 class AccountsGrid extends React.Component {
   constructor(props) {
     super(props);
     this.handlePrint = this.handlePrint.bind(this);
+    this.state = {
+      account: null
+    };
   }
+
   handleSelection(account_id) {
-    console.log("from handleSelection: ", account_id);
+    this.props.selectedAccount(account_id);
+    this.setState({ account: account_id });
   }
   handlePrint() {
     let acts = this.props.accounts.map(account => {
@@ -36,7 +43,11 @@ class AccountsGrid extends React.Component {
     console.log(this.props);
   }
   render() {
-    return <Grid>{this.handlePrint()}</Grid>;
+    return !this.state.account ? (
+      <Grid>{this.handlePrint()}</Grid>
+    ) : (
+      <SingleAccount account={this.state.account} />
+    );
   }
 }
 
