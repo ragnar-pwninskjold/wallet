@@ -16,9 +16,9 @@ PRs welcome.
 
 Navigate to root directory, then:
 
-APP_PORT=8000 \
-PLAID_CLIENT_ID=#### \
-PLAID_SECRET=#### \
-PLAID_PUBLIC_KEY=#### \
-PLAID_ENV=sandbox \
+APP_PORT=8000 /\
+PLAID_CLIENT_ID=#### /\
+PLAID_SECRET=#### /\
+PLAID_PUBLIC_KEY=#### /\
+PLAID_ENV=sandbox /\
 node server.js
