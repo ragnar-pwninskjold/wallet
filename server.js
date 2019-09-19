@@ -1,6 +1,7 @@
 const envvar = require("envvar");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const moment = require("moment");
 const plaid = require("plaid");
@@ -25,6 +26,9 @@ const client = new plaid.Client(
 );
 
 const app = express();
+
+app.use(cors());
+
 app.use(express.static("public"));
 app.use(
   bodyParser.urlencoded({
@@ -34,6 +38,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.get("/", function(request, response, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   response.send("fooRoot", {
     PLAID_PUBLIC_KEY: PLAID_PUBLIC_KEY,
     PLAID_ENV: PLAID_ENV
@@ -41,8 +46,9 @@ app.get("/", function(request, response, next) {
 });
 
 app.post("/get_access_token", function(request, response, next) {
-  response.header("Access-Control-Allow-Origin", "*");
+  //response.header("Access-Control-Allow-Origin", "http://localhost:3000");
   PUBLIC_TOKEN = request.body.public_token;
+  console.log("public token: ", PUBLIC_TOKEN);
   client.exchangePublicToken(PUBLIC_TOKEN, function(error, tokenResponse) {
     if (error != null) {
       console.error(error);
